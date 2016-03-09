@@ -174,7 +174,7 @@ class Site < ActiveRecord::Base
     sql="insert into projects_sites
     select distinct(subsql.id) as project_id, #{self.id} as site_id from (#{projects_sql({ :limit => nil, :offset => nil }).to_sql}) as subsql"
     ActiveRecord::Base.connection.execute(sql)
-    #Rails.cache.clear
+    Rails.cache.clear
     $redis.flushall
   end
   def remove_cached_projects
